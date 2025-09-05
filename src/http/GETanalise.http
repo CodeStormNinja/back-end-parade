@@ -1,0 +1,1 @@
+GET http://localhost:8080/api/clima/analise?localidade=Campo%20grande&dataEHora=2025-09-05T10:30:00 HTTP/1.1
