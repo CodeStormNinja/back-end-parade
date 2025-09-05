@@ -3,7 +3,10 @@ package com.CodeStormNinja.back_end_parade.service;
 import com.CodeStormNinja.back_end_parade.model.ClimaInput;
 import com.CodeStormNinja.back_end_parade.model.ClimaOutput;
 import com.CodeStormNinja.back_end_parade.model.DadosBrutos;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class ClimaService {
 
 
