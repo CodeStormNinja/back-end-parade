@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-
-
 public class ClimaInput {
     private String localidade;
     private LocalDateTime dataEHora;
@@ -31,5 +29,3 @@ public class ClimaInput {
         this.dataEHora = dataEHora;
     }
 }
-
-
