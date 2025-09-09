@@ -25,7 +25,7 @@ public class ClimaService {
 
         System.out.println("buscando dados para a localizção..." + input.getLocalidade());
 
-        return new DadosBrutos(30.0, 25.8, 7.5);
+        return new DadosBrutos();
     }
 
     // lógia de if else
