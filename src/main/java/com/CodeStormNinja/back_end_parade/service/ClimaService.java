@@ -16,11 +16,20 @@ public class ClimaService {
     // controller buscará esse
 
     public ClimaOutput analisarStatus(ClimaInput input) {
-        DadosBrutos dadosBrutos = buscarDadosBrutos(input);
+       LinkedHashMap<String, String> coordenadas = buscarCordenadas(input.getLocalidade());
 
-        String fraseFinal = logicaNegocio(dadosBrutos);
+       if(coordenadas == null || coordenadas.containsKey("lat") || !coordenadas.containsKey("lon") ){
+           return  new ClimaOutput("Error", "Location not found or geocoding error");
 
-        return new ClimaOutput(fraseFinal);
+       }
+       double lat = Double.parseDouble(coordenadas.get("lat"));
+       double lon = Double.parseDouble(coordenadas.get("lon"));
+
+       DadosBrutos dadosBrutos = buscarDadosBrutos(lat, lon);
+
+       String fraseFinal = logicaNegocio(dadosBrutos);
+
+       return new ClimaOutput(fraseFinal);
     }
 
     private LinkedHashMap<String, String> buscarCordenadas(String localiade) {
@@ -41,10 +50,8 @@ public class ClimaService {
     }
 
 
-    public DadosBrutos buscarDadosBrutos(ClimaInput input) {
-        System.out.println("searching for data for location" + input.getLocalidade());
-
-        String url = "" + input.getLocalidade();
+    public DadosBrutos buscarDadosBrutos(double lat, double lon) {
+        String url= "sdsdsdsdsdsdsdsdsdsd" + lat + "&lon=" + lon;
 
         try{
 
