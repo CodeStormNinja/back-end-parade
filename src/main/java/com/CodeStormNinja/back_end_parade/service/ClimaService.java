@@ -4,28 +4,59 @@ import com.CodeStormNinja.back_end_parade.model.ClimaInput;
 import com.CodeStormNinja.back_end_parade.model.ClimaOutput;
 import com.CodeStormNinja.back_end_parade.model.DadosBrutos;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.LinkedHashMap;
 
 @Service
 public class ClimaService {
 
+    private final RestTemplate restTemplate = new RestTemplate();
+
     // controller buscará esse
 
     public ClimaOutput analisarStatus(ClimaInput input) {
-        DadosBrutos dadosBrutos = buscarDadosBrutosSimulados(input);
+        DadosBrutos dadosBrutos = buscarDadosBrutos(input);
 
         String fraseFinal = logicaNegocio(dadosBrutos);
 
         return new ClimaOutput(fraseFinal);
     }
 
-    // metodo que terá o okhttp
-    // teste
+    private LinkedHashMap<String, String> buscarCordenadas(String localiade) {
+        String url = "" + localiade + "&format=jason&limit=1";
+        try{
 
-    public DadosBrutos buscarDadosBrutosSimulados(ClimaInput input) {
+            Object[] resposta = restTemplate.getForObject(url,Object[].class);
+            if (resposta != null && resposta.length > 0) {
+                return  (LinkedHashMap<String, String>) resposta[0];
+            }
 
-        System.out.println("buscando dados para a localizção..." + input.getLocalidade());
+        }catch (Exception e){
+            System.err.println("error fetching coordinates" + e.getMessage());
 
-        return new DadosBrutos();
+        }
+        return  null;
+
+    }
+
+
+    public DadosBrutos buscarDadosBrutos(ClimaInput input) {
+        System.out.println("searching for data for location" + input.getLocalidade());
+
+        String url = "" + input.getLocalidade();
+
+        try{
+
+            return restTemplate.getForObject(url,DadosBrutos.class);
+
+        } catch (Exception e) {
+            System.err.println("Error fetching data" + e.getMessage());
+
+            return  new DadosBrutos();
+        }
+
+
     }
 
     // lógia de if else
