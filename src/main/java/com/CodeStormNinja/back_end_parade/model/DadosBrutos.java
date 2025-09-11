@@ -27,6 +27,15 @@ public class DadosBrutos {
 
     }
 
+    public DadosBrutos(double lat, double lon, OffsetDateTime updated_at, String source, Optional<Integer> level) {
+        this.lat = lat;
+        this.lon = lon;
+        this.updated_at = updated_at;
+        this.source = source;
+        this.level = level;
+    }
+
+
 
     public double getLat() {
         return lat;

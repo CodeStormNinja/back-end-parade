@@ -8,14 +8,10 @@ public class WindData extends DadosBrutos{
     private double gust_kmh;
     private double sustained_kmh;
 
-    public WindData(double p_gust_1h, double gust_kmh, double sustained_kmh) {
-        this.p_gust_1h = p_gust_1h;
-        this.gust_kmh = gust_kmh;
-        this.sustained_kmh = sustained_kmh;
-    }
+    public WindData(double lat, double lon, OffsetDateTime updated_at, String source, Optional<Integer> level,
+                    double p_gust_1h, double gust_kmh, double sustained_kmh) {
 
-    public WindData(double temperatura, double lat, double lon, OffsetDateTime updated_at, String source, Optional<Integer> level, double p_gust_1h, double gust_kmh, double sustained_kmh) {
-        super(temperatura, lat, lon, updated_at, source, level);
+        super(lat, lon, updated_at, source, level);
         this.p_gust_1h = p_gust_1h;
         this.gust_kmh = gust_kmh;
         this.sustained_kmh = sustained_kmh;
