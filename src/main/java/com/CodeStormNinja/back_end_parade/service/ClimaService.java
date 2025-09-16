@@ -3,90 +3,50 @@ package com.CodeStormNinja.back_end_parade.service;
 import com.CodeStormNinja.back_end_parade.model.ClimaInput;
 import com.CodeStormNinja.back_end_parade.model.ClimaOutput;
 import com.CodeStormNinja.back_end_parade.model.DadosBrutos;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedHashMap;
 
-@Service
-public class ClimaService {
 
-    private final RestTemplate restTemplate = new RestTemplate();
 
-    // controller buscará esse
+    @Service
+    public class ClimaService {
 
-    public ClimaOutput analisarStatus(ClimaInput input) {
-       LinkedHashMap<String, String> coordenadas = buscarCordenadas(input.getLocalidade());
+        public ClimaOutput analisarStatus(ClimaInput input) {
+            DadosBrutos dadosBrutos = buscarDadosBrutosSimulados(input);
 
-       if(coordenadas == null || coordenadas.containsKey("lat") || !coordenadas.containsKey("lon") ){
-           return  new ClimaOutput("Error", "Location not found or geocoding error");
+            String statusClima = logicaNegocio(dadosBrutos);
 
-       }
-       double lat = Double.parseDouble(coordenadas.get("lat"));
-       double lon = Double.parseDouble(coordenadas.get("lon"));
+            return new ClimaOutput(statusClima, dadosBrutos.getTemperatura(), dadosBrutos.getChancePrecipitacao());
+        }
 
-       DadosBrutos dadosBrutos = buscarDadosBrutos(lat, lon);
+        public DadosBrutos buscarDadosBrutosSimulados(ClimaInput input) {
+            System.out.println("Buscando dados simulados para a localização: " + input.getLocalidade());
+            return new DadosBrutos(30.0, 25.8, 7.5);
+        }
 
-       String fraseFinal = logicaNegocio(dadosBrutos);
-
-       return new ClimaOutput(fraseFinal);
-    }
-
-    private LinkedHashMap<String, String> buscarCordenadas(String localiade) {
-        String url = "" + localiade + "&format=jason&limit=1";
-        try{
-
-            Object[] resposta = restTemplate.getForObject(url,Object[].class);
-            if (resposta != null && resposta.length > 0) {
-                return  (LinkedHashMap<String, String>) resposta[0];
+        public String logicaNegocio(DadosBrutos dados) {
+            int temp = (int) dados.getTemperatura();
+            switch (temp) {
+                case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9:
+                    return "Muito Frio";
+                case 10, 11, 12, 13, 14, 15:
+                    return "Frio";
+                case 16, 17, 18, 19, 20, 21, 22, 23, 24:
+                    return "Agradável";
+                case 25, 26, 27, 28, 29:
+                    return "Quente";
+                case 30, 31, 32, 33, 34, 35, 36:
+                    return "Muito Quente";
+                default:
+                    if (dados.getTemperatura() >= 36) {
+                        return "Extremamente Quente";
+                    } else {
+                        return "Dados inválidos";
+                    }
             }
-
-        }catch (Exception e){
-            System.err.println("error fetching coordinates" + e.getMessage());
-
-        }
-        return  null;
-
-    }
-
-
-    public DadosBrutos buscarDadosBrutos(double lat, double lon) {
-        String url= "sdsdsdsdsdsdsdsdsdsd" + lat + "&lon=" + lon;
-
-        try{
-
-            return restTemplate.getForObject(url,DadosBrutos.class);
-
-        } catch (Exception e) {
-            System.err.println("Error fetching data" + e.getMessage());
-
-            return  new DadosBrutos();
-        }
-
-
-    }
-
-    // lógia de if else
-
-    public String logicaNegocio(DadosBrutos dados) {
-        int temp = (int) dados.getTemperatura();
-        switch (temp) {
-            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9:
-                return "Muito Frio";
-            case 10, 11, 12, 13, 14, 15:
-                return "Frio";
-            case 16, 17, 18, 19, 20, 21, 22, 23, 24:
-                return "Agradável";
-            case 25, 26, 27, 28, 29:
-                return "Quente";
-            case 30, 31, 32, 33, 34, 35, 36:
-                return "Muito Quente";
-            default:
-                if (dados.getTemperatura() >= 36) {
-                    return "Extremamente Quente";
-                } else {
-                    return "Dados inválidos";
-                }
         }
     }
-}
+

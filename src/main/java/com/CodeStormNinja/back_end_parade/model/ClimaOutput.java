@@ -2,28 +2,29 @@ package com.CodeStormNinja.back_end_parade.model;
 
 public class ClimaOutput {
 
-    private String status;
-    private String fraseFinal;
+    private String evento;
     private String mensagem;
+    private double temperatura;
+    private double chanceChuva;
 
-    public ClimaOutput(String status, String mensagem) {
-        this.status = status;
+
+    public ClimaOutput(String evento, String mensagem) {
+        this.evento = evento;
         this.mensagem = mensagem;
-
     }
 
-
-
-    public ClimaOutput(String fraseFinal){
-        this.fraseFinal =fraseFinal;
+    public ClimaOutput(String evento, double temperatura, double chanceChuva) {
+        this.evento = evento;
+        this.temperatura = temperatura;
+        this.chanceChuva = chanceChuva;
     }
 
-    public String getStatus() {
-        return status;
+    public String getEvento() {
+        return evento;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setEvento(String evento) {
+        this.evento = evento;
     }
 
     public String getMensagem() {
@@ -34,13 +35,21 @@ public class ClimaOutput {
         this.mensagem = mensagem;
     }
 
-
-    public String getFraseFinal() {
-        return fraseFinal;
+    public double getTemperatura() {
+        return temperatura;
     }
 
-    public void setFraseFinal(String fraseFinal) {
-        this.fraseFinal = fraseFinal;
+    public void setTemperatura(float temperatura) {
+        this.temperatura = temperatura;
     }
+
+    public double getChanceChuva() {
+        return chanceChuva;
+    }
+
+    public void setChanceChuva(float chanceChuva) {
+        this.chanceChuva = chanceChuva;
+    }
+
 
 }
