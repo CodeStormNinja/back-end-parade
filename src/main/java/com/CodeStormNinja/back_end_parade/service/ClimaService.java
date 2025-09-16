@@ -15,11 +15,20 @@ import java.util.LinkedHashMap;
     public class ClimaService {
 
         public ClimaOutput analisarStatus(ClimaInput input) {
-            DadosBrutos dadosBrutos = buscarDadosBrutosSimulados(input);
+            try {
+                DadosBrutos dadosBrutos = buscarDadosBrutosSimulados(input);
 
-            String statusClima = logicaNegocio(dadosBrutos);
+                if (dadosBrutos == null) {
+                    return new ClimaOutput("Erro: Dados não encontrados", 0.0, 0.0);
+                }
 
-            return new ClimaOutput(statusClima, dadosBrutos.getTemperatura(), dadosBrutos.getChancePrecipitacao());
+                String statusClima = logicaNegocio(dadosBrutos);
+
+                return new ClimaOutput(statusClima, dadosBrutos.getTemperatura(), dadosBrutos.getChancePrecipitacao());
+            } catch (Exception e) {
+                System.err.println("Ocorreu um erro durante a análise do clima: " + e.getMessage());
+                return new ClimaOutput("Erro", 0.0, 0.0);
+            }
         }
 
         public DadosBrutos buscarDadosBrutosSimulados(ClimaInput input) {
