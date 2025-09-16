@@ -1,14 +1,30 @@
 package com.CodeStormNinja.back_end_parade.model;
 
-public class DadosBrutos {
-    private double temperatura;
-    private double umidade;
-    private double velocidadeVento;
+import java.time.OffsetDateTime;
+import java.util.Optional;
 
-    public DadosBrutos(double temperatura, double umidade, double velocidadeVento) {
+public class DadosBrutos {
+
+    private double temperatura;
+    private double valorPrecipitacao;
+    private double chancePrecipitacao;
+    private double probabilidadeRaios;
+    private double velocidadeRajadasVento;
+    private double valorIntensidadeNeve;
+
+    public DadosBrutos(double temperatura, double valorPrecipitacao, double chancePrecipitacao, double probabilidadeRaios, double velocidadeRajadasVento, double valorIntensidadeNeve) {
         this.temperatura = temperatura;
-        this.umidade = umidade;
-        this.velocidadeVento = velocidadeVento;
+        this.valorPrecipitacao = valorPrecipitacao;
+        this.chancePrecipitacao = chancePrecipitacao;
+        this.probabilidadeRaios = probabilidadeRaios;
+        this.velocidadeRajadasVento = velocidadeRajadasVento;
+        this.valorIntensidadeNeve = valorIntensidadeNeve;
+    }
+
+    public DadosBrutos(double temperatura, double valorPrecipitacao, double chancePrecipitacao) {
+        this.temperatura = temperatura;
+        this.valorPrecipitacao = valorPrecipitacao;
+        this.chancePrecipitacao = chancePrecipitacao;
     }
 
     public double getTemperatura() {
@@ -19,19 +35,43 @@ public class DadosBrutos {
         this.temperatura = temperatura;
     }
 
-    public double getUmidade() {
-        return umidade;
+    public double getValorPrecipitacao() {
+        return valorPrecipitacao;
     }
 
-    public void setUmidade(double umidade) {
-        this.umidade = umidade;
+    public void setValorPrecipitacao(double valorPrecipitacao) {
+        this.valorPrecipitacao = valorPrecipitacao;
     }
 
-    public double getVelocidadeVento() {
-        return velocidadeVento;
+    public double getChancePrecipitacao() {
+        return chancePrecipitacao;
     }
 
-    public void setVelocidadeVento(double velocidadeVento) {
-        this.velocidadeVento = velocidadeVento;
+    public void setChancePrecipitacao(double chancePrecipitacao) {
+        this.chancePrecipitacao = chancePrecipitacao;
+    }
+
+    public double getProbabilidadeRaios() {
+        return probabilidadeRaios;
+    }
+
+    public void setProbabilidadeRaios(double probabilidadeRaios) {
+        this.probabilidadeRaios = probabilidadeRaios;
+    }
+
+    public double getVelocidadeRajadasVento() {
+        return velocidadeRajadasVento;
+    }
+
+    public void setVelocidadeRajadasVento(double velocidadeRajadasVento) {
+        this.velocidadeRajadasVento = velocidadeRajadasVento;
+    }
+
+    public double getValorIntensidadeNeve() {
+        return valorIntensidadeNeve;
+    }
+
+    public void setValorIntensidadeNeve(double valorIntensidadeNeve) {
+        this.valorIntensidadeNeve = valorIntensidadeNeve;
     }
 }

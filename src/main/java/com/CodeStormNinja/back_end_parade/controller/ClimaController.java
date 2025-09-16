@@ -22,10 +22,18 @@ public class ClimaController {
             @RequestParam String localidade,
             @RequestParam LocalDateTime dataEHora) {
 
-        ClimaInput input = new ClimaInput(localidade, dataEHora);
-        ClimaOutput output = climaService.analisarStatus(input);
+        try {
+            ClimaInput input = new ClimaInput(localidade, dataEHora);
+            ClimaOutput output = climaService.analisarStatus(input);
+            return ResponseEntity.ok(output);
 
-        return ResponseEntity.ok(output);
+        } catch (Exception e) {
+           System.err.println("error when analyzing climate" + e.getMessage());
+
+
+           return  ResponseEntity.internalServerError().body(null);
+        }
+
 
     }
 
